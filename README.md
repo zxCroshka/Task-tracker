@@ -35,7 +35,8 @@ cd Task-tracker
 Initialize Go module:
 
 ```bash
-go mod init task-cli
+=go mod init github.com/zxCroshka/Task-tracker
+
 ```
 
 Build the binary:
