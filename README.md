@@ -35,7 +35,7 @@ cd Task-tracker
 Initialize Go module:
 
 ```bash
-=go mod init github.com/zxCroshka/Task-tracker
+go mod init github.com/zxCroshka/Task-tracker
 
 ```
 
