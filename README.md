@@ -48,7 +48,7 @@ go build .
 Create an alias for easier usage:
 
 ```bash
-alias task-cli='./Task-Tracker'
+alias task-cli='./Task-tracker'
 ```
 
 ---
