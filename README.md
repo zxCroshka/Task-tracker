@@ -44,7 +44,7 @@ Build the binary:
 go build .
 ```
 
-(Optional) Create an alias for easier usage:
+Create an alias for easier usage:
 
 ```bash
 alias task-cli='./task-cli'
