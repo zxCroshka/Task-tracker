@@ -4,7 +4,8 @@ import (
 	"log"
 	"os"
 	"strconv"
-	"tasktracker/task"
+	"github.com/zxCroshka/Task-tracker/task"
+
 )
 
 func main() {
