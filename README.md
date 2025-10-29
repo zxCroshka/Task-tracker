@@ -52,7 +52,7 @@ alias task-cli='./task-cli'
 
 ---
 
-## 💡 Usage
+##  Usage
 
 Add a new task:
 
@@ -96,14 +96,14 @@ task-cli list in-progress
 
 ---
 
-## 📦 Data Storage
+##  Data Storage
 
 All tasks are saved in a local JSON file (e.g., `tasks.json`).
 This ensures your tasks remain available between runs.
 
 ---
 
-## 🛠 Requirements
+##  Requirements
 
 * Go 1.20+ installed
 * Linux/macOS/Windows supported
