@@ -92,7 +92,7 @@ func (t *TaskManager) List(){
 		log.Fatal(err)
 	}
 	for i:= 0; i < len(t.Tasks);i++{
-		log.Println(t.Tasks[i])
+		t.Tasks[i].Print()
 	}
 }
 
@@ -102,7 +102,7 @@ func (t *TaskManager) ListStatus(status string){
 	}
 	for i:= 0; i < len(t.Tasks);i++{
 		if t.Tasks[i].Status == status{
-			log.Println(t.Tasks[i])
+			t.Tasks[i].Print()
 		}
 	}
 }

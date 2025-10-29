@@ -1,20 +1,23 @@
 package task
 
-import "time"
+import (
+	"log"
+	"time"
+)
 
 type Task struct {
-	Id        int    `json:"id"`
-	Text      string `json:"text"`
-	Status    string `json:"status"`
-	CreatedAt time.Time`json:"createdAt"`
-	UpdatedAt time.Time`json:"updatedAt"`
+	Id        int       `json:"id"`
+	Text      string    `json:"text"`
+	Status    string    `json:"status"`
+	CreatedAt time.Time `json:"createdAt"`
+	UpdatedAt time.Time `json:"updatedAt"`
 }
 
 func NewTask(text string) *Task {
 	return &Task{
-		Id:     0,
-		Text:   text,
-		Status: "todo",
+		Id:        0,
+		Text:      text,
+		Status:    "todo",
 		CreatedAt: time.Now(),
 		UpdatedAt: time.Now(),
 	}
@@ -26,4 +29,7 @@ func (t *Task) ChangeText(text string) {
 
 func (t *Task) ChangeStatus(status string) {
 	t.Status = status
+}
+func (t *Task) Print() {
+	log.Printf("{\nID: %d,\nText: %s,\nStatus: %s,\nCreatedAt: %s,\nUpdatedAt: %s\n}\n", t.Id, t.Text, t.Status, t.CreatedAt, t.UpdatedAt)
 }
