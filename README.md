@@ -28,7 +28,7 @@ All tasks are stored in a JSON file for persistence.
 Clone the repository:
 
 ```bash
-git clone git@github.com:zxCroshka/Task-tracker.git
+git clone https://github.com/zxCroshka/Task-tracker.git
 cd Task-tracker
 ```
 
