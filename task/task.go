@@ -31,5 +31,5 @@ func (t *Task) ChangeStatus(status string) {
 	t.Status = status
 }
 func (t *Task) Print() {
-	log.Printf("{\nID: %d,\nText: %s,\nStatus: %s,\nCreatedAt: %s,\nUpdatedAt: %s\n}\n", t.Id, t.Text, t.Status, t.CreatedAt, t.UpdatedAt)
+	log.Printf("{\n	ID: %d,\n	Text: %s,\n	Status: %s,\n	CreatedAt: %s,\n	UpdatedAt: %s\n}\n", t.Id, t.Text, t.Status, t.CreatedAt, t.UpdatedAt)
 }
