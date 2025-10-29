@@ -1,11 +1,8 @@
 package task
 
 import (
-	"encoding/json"
-	"fmt"
-	"io"
 	"log"
-	"os"
+	"time"
 )
 
 type Manager interface {
@@ -24,73 +21,88 @@ func NewTaskManager() *TaskManager {
 }
 
 func (t *TaskManager) Add(task *Task) {
-	if flag, err := exists("tasks.json"); err == nil {
-		if !flag {
-			file, err := os.Create("tasks.json")
-			if err != nil {
-				log.Fatal(err)
-			}
-			if err := file.Close(); err != nil {
-				log.Fatal(err)
-			}
-		}
-
-	}
-	file, err := os.OpenFile("tasks.json", os.O_RDWR, 0777)
-	if err != nil {
+	if err := CreateIfNotExists("tasks.json"); err != nil {
 		log.Fatal(err)
 	}
 
-	if err := json.NewDecoder(file).Decode(&t); err != nil && err != io.EOF {
+	if err := JSONtoStruct(&t); err != nil {
 		log.Fatal(err)
 	}
 
 	t.Tasks = append(t.Tasks, *task)
 	n := len(t.Tasks)
 	t.Tasks[n-1].Id = n - 1
-	file, err = os.OpenFile("tasks.json", os.O_RDWR|os.O_TRUNC, 0777)
-	if err != nil {
+	if err := StructToJSON(t); err != nil {
 		log.Fatal(err)
 	}
-	defer func() {
-		if err := file.Close(); err != nil {
-			log.Fatal(err)
-		}
-	}()
-	if err = json.NewEncoder(file).Encode(t); err != nil {
+	log.Printf("Task added successfully (ID: %d)",n-1)
+}
+
+func (t *TaskManager) Delete(id int) {
+	if err := JSONtoStruct(&t); err != nil {
+		log.Fatal(err)
+	}
+	if len(t.Tasks) <= id {
+		log.Println("there isn't task with this id")
+		return
+	}
+	t.Tasks = append(t.Tasks[:id], t.Tasks[id+1:]...)
+	for i := 0; i < len(t.Tasks); i++ {
+		t.Tasks[i].Id = i
+	}
+	if err := StructToJSON(t); err != nil {
+		log.Fatal(err)
+	}
+	log.Printf("Task deleted successfully (ID: %d)",id)
+}
+
+func (t *TaskManager) UpdateText(id int, text string){
+	if err := JSONtoStruct(&t); err != nil{
+		log.Fatal(err)
+	}
+	if len(t.Tasks) <= id {
+		log.Println("there isn't task with this id")
+		return
+	}
+	t.Tasks[id].Text = text
+	t.Tasks[id].UpdatedAt = time.Now()
+	if err := StructToJSON(t); err != nil {
 		log.Fatal(err)
 	}
 }
 
-func (t *TaskManager) Delete(id int){
-	file, err := os.Open("tasks.json")
-	if err != nil{
-		log.Fatal(err)
-	}
-	if err := json.NewDecoder(file).Decode(&t); err != nil{
+
+func (t *TaskManager) UpdateStatus(id int, status string){
+	if err := JSONtoStruct(&t); err != nil{
 		log.Fatal(err)
 	}
 	if len(t.Tasks) <= id {
-		fmt.Println("there isnt task with this id")
+		log.Println("there isn't task with this id")
 		return
 	}
-	if err := file.Close(); err != nil{
+	t.Tasks[id].Status = status
+	t.Tasks[id].UpdatedAt = time.Now()
+	if err := StructToJSON(t); err != nil {
 		log.Fatal(err)
 	}
-	t.Tasks = append(t.Tasks[:id],t.Tasks[id+1:]...)
+}
+
+func (t *TaskManager) List(){
+	if err := JSONtoStruct(&t); err != nil{
+		log.Fatal(err)
+	}
 	for i:= 0; i < len(t.Tasks);i++{
-		t.Tasks[i].Id = i
+		log.Println(t.Tasks[i])
 	}
-	file, err = os.OpenFile("tasks.json", os.O_RDWR|os.O_TRUNC, 0777)
-	if err != nil {
+}
+
+func (t *TaskManager) ListStatus(status string){
+	if err := JSONtoStruct(&t); err != nil{
 		log.Fatal(err)
 	}
-	defer func() {
-		if err := file.Close(); err != nil {
-			log.Fatal(err)
+	for i:= 0; i < len(t.Tasks);i++{
+		if t.Tasks[i].Status == status{
+			log.Println(t.Tasks[i])
 		}
-	}()
-	if err = json.NewEncoder(file).Encode(t); err != nil {
-		log.Fatal(err)
 	}
 }

@@ -1,25 +1,29 @@
 package task
 
-type Task struct{
-	Id int
-	Text string`json:"text"`
-	Status string`json:"status"`
+import "time"
+
+type Task struct {
+	Id        int    `json:"id"`
+	Text      string `json:"text"`
+	Status    string `json:"status"`
+	CreatedAt time.Time`json:"createdAt"`
+	UpdatedAt time.Time`json:"updatedAt"`
 }
 
-func NewTask(text string) *Task{
+func NewTask(text string) *Task {
 	return &Task{
-		Id: 0,
-		Text : text,
+		Id:     0,
+		Text:   text,
 		Status: "todo",
+		CreatedAt: time.Now(),
+		UpdatedAt: time.Now(),
 	}
 }
 
-func (t *Task) ChangeText(text string){
+func (t *Task) ChangeText(text string) {
 	t.Text = text
 }
 
-
-func (t *Task) ChangeStatus(status string){
+func (t *Task) ChangeStatus(status string) {
 	t.Status = status
 }
-

@@ -1,13 +1,66 @@
 package main
 
-import "tasktracker/task"
+import (
+	"log"
+	"os"
+	"strconv"
+	"tasktracker/task"
+)
 
 func main() {
-	t := task.NewTask("croha1")
-	t1 := task.NewTask("salyam2")
 	tm := task.NewTaskManager()
-	tm.Add(t)
-	tm.Add(t1)
-	tm.Delete(5)
-	tm.Delete(0)
+	cmd := os.Args[1]
+	if cmd == "add" {
+		t := task.NewTask(os.Args[2])
+		tm.Add(t)
+	}
+	if cmd == "update" {
+		id, err := strconv.Atoi(os.Args[2])
+		if err != nil {
+			log.Fatal(err)
+		}
+		text := os.Args[3]
+		tm.UpdateText(id, text)
+
+	}
+	if cmd == "delete" {
+		id, err := strconv.Atoi(os.Args[2])
+		if err != nil {
+			log.Fatal(err)
+		}
+		tm.Delete(id)
+	}
+	if cmd == "mark" {
+		status := os.Args[2]
+		id, err := strconv.Atoi(os.Args[3])
+		if err != nil {
+			log.Fatal(err)
+		}
+		tm.UpdateStatus(id, status)
+	}
+	if cmd == "list" {
+		if len(os.Args) == 2 {
+			tm.List()
+		} else {
+			status := os.Args[2]
+			tm.ListStatus(status)
+		}
+	}
+	// t := task.NewTask("uga")
+	// t1 := task.NewTask("buga")
+
+	// tm.Add(t)
+	// tm.Add(t1)
+	// tm.List()
+	// tm.Delete(5)
+	// tm.Delete(0)
+	// t2 := task.NewTask("croha")
+	// t3 := task.NewTask("ashot")
+	// tm.Add(t2)
+	// tm.Add(t3)
+	// tm.UpdateText(0, "buga updated")
+	// tm.UpdateStatus(1, "in-progress")
+	// tm.List()
+	// tm.ListStatus("in-progress")
+
 }
