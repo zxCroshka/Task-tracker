@@ -8,6 +8,7 @@ import (
 
 )
 
+
 func main() {
 	tm := task.NewTaskManager()
 	cmd := os.Args[1]
@@ -33,11 +34,24 @@ func main() {
 	}
 	if cmd == "mark" {
 		status := os.Args[2]
-		id, err := strconv.Atoi(os.Args[3])
+		marks := [3]string{"todo","in-progress","done"}
+		flag := false
+		for i:= 0; i < 3;i++{
+			if status == marks[i]{
+				flag = true
+				break
+			}
+		}
+		if flag{
+			id, err := strconv.Atoi(os.Args[3])
 		if err != nil {
 			log.Fatal(err)
 		}
 		tm.UpdateStatus(id, status)
+		}else{
+			log.Println("Invalid status of task")
+		}
+		
 	}
 	if cmd == "list" {
 		if len(os.Args) == 2 {
